@@ -5,56 +5,76 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UF1: Centro de Entrenamiento</title>
     <style>
-        body { font-family: 'Verdana', sans-serif; background-color: #e8f5e9; text-align: center; color: #1b5e20; padding: 20px; }
-        .grid-juegos { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; max-width: 900px; margin: 30px auto; }
-        .card-juego { background: white; border: 3px solid #4caf50; border-radius: 15px; padding: 20px; text-decoration: none; color: inherit; transition: 0.3s; display: flex; flex-direction: column; align-items: center; }
-        .card-juego:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); background-color: #f1f8e9; }
-        .icono { font-size: 40px; margin-bottom: 10px; }
-        .titulo-juego { font-weight: bold; font-size: 1.1em; }
-        .tipo-etiqueta { font-size: 0.8em; color: #666; margin-top: 5px; text-transform: uppercase; }
-        .btn-volver { display: inline-block; margin-top: 40px; padding: 15px 30px; background: #8b4513; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
+        body { 
+            font-family: 'Verdana', sans-serif; 
+            background-image: url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200'); 
+            background-size: cover; background-position: center; background-attachment: fixed;
+            text-align: center; color: #1b5e20; padding: 20px; margin: 0;
+        }
+        .overlay { background-color: rgba(255, 255, 255, 0.9); padding: 20px; border-radius: 20px; display: inline-block; max-width: 900px; margin-top: 20px; }
+        .grid-juegos { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin: 30px auto; }
+        
+        /* ESTILOS DE LAS TARJETAS */
+        .card-juego { 
+            background: white; border: 3px solid #4caf50; border-radius: 15px; padding: 20px; 
+            text-decoration: none; color: inherit; transition: 0.3s; display: flex; flex-direction: column; align-items: center; 
+        }
+        
+        /* ESTADO BLOQUEADO */
+        .bloqueado { background-color: #eee !important; border-color: #bbb !important; opacity: 0.6; cursor: not-allowed; pointer-events: none; }
+        .bloqueado .icono::after { content: ' 🔒'; font-size: 0.5em; }
+
+        .card-juego.especial { grid-column: 1 / -1; width: 300px; border: 5px solid #ff9800; margin: 0 auto; }
+        .btn-volver { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #8b4513; color: white; text-decoration: none; border-radius: 50px; }
     </style>
 </head>
 <body>
 
-    <h1>🔬 UF1: Investigando los Seres Vivos</h1>
-    <p>Completa los 5 retos para conseguir la Medalla de Biólogo.</p>
+<div class="overlay">
+    <h1>🔬 UF1: Entrenamiento de Biólogos</h1>
+    <p>Debes completar los juegos en orden para desbloquear el Reto Final.</p>
 
     <div class="grid-juegos">
-        
-        <a href="juego-1/index.html" class="card-juego">
-            <div class="icono">🖱️</div>
-            <div class="titulo-juego">Clasificador</div>
-            <div class="tipo-etiqueta">Arrastrar y Soltar</div>
+        <a href="juego-1/index.html" id="btn-juego1" class="card-juego">
+            <div class="icono">🖱️</div><div class="titulo-juego">1. Clasificador</div>
         </a>
-
-        <a href="juego-2/index.html" class="card-juego">
-            <div class="icono">👆</div>
-            <div class="titulo-juego">El Intruso</div>
-            <div class="tipo-etiqueta">Seleccionar</div>
+        <a href="juego-2/index.html" id="btn-juego2" class="card-juego bloqueado">
+            <div class="icono">👆</div><div class="titulo-juego">2. El Intruso</div>
         </a>
-
-        <a href="juego-3/index.html" class="card-juego">
-            <div class="icono">⚖️</div>
-            <div class="titulo-juego">¿Verdad o Mentira?</div>
-            <div class="tipo-etiqueta">Verdadero/Falso</div>
+        <a href="juego-3/index.html" id="btn-juego3" class="card-juego bloqueado">
+            <div class="icono">⚖️</div><div class="titulo-juego">3. ¿V o F?</div>
         </a>
-
-        <a href="juego-4/index.html" class="card-juego">
-            <div class="icono">❓</div>
-            <div class="titulo-juego">Súper Quiz</div>
-            <div class="tipo-etiqueta">Opción Múltiple</div>
+        <a href="juego-4/index.html" id="btn-juego4" class="card-juego bloqueado">
+            <div class="icono">❓</div><div class="titulo-juego">4. Súper Quiz</div>
         </a>
-
-        <a href="juego-5/index.html" class="card-juego">
-            <div class="icono">🧠</div>
-            <div class="titulo-juego">Parejas Locas</div>
-            <div class="tipo-etiqueta">Especial (Memory)</div>
-        </a>
-
     </div>
 
-    <a href="../index.html" class="btn-volver">⬅️ Volver al Mapa del Tesoro</a>
+    <a href="juego-5/index.html" id="btn-juego5" class="card-juego especial bloqueado">
+        <div class="icono">🧠</div><div class="titulo-juego">5. RETO FINAL: Memory</div>
+    </a>
+
+    <a href="../index.html" class="btn-volver">⬅️ Volver al Mapa</a>
+    <button onclick="reiniciarProgreso()" style="margin-top:20px; font-size:10px; border:none; background:none; cursor:pointer; color:gray;">[Reiniciar Progreso]</button>
+</div>
+
+<script>
+    function revisarProgreso() {
+        // El Juego 1 siempre está abierto. Comprobamos los demás:
+        if(localStorage.getItem('unidad1_juego1_completado')) document.getElementById('btn-juego2').classList.remove('bloqueado');
+        if(localStorage.getItem('unidad1_juego2_completado')) document.getElementById('btn-juego3').classList.remove('bloqueado');
+        if(localStorage.getItem('unidad1_juego3_completado')) document.getElementById('btn-juego4').classList.remove('bloqueado');
+        if(localStorage.getItem('unidad1_juego4_completado')) document.getElementById('btn-juego5').classList.remove('bloqueado');
+    }
+
+    function reiniciarProgreso() {
+        if(confirm("¿Quieres borrar tu progreso de esta unidad?")) {
+            localStorage.clear();
+            location.reload();
+        }
+    }
+
+    window.onload = revisarProgreso;
+</script>
 
 </body>
 </html>
