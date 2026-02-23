@@ -2,64 +2,59 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>UF1: El Reino Animal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UF1: Centro de Entrenamiento</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background: #e8f5e9; }
-        .container { display: flex; justify-content: space-around; margin-top: 20px; }
-        .box { width: 40%; min-height: 200px; border: 3px dashed #2e7d32; border-radius: 10px; background: white; padding: 10px; }
-        .animal { display: inline-block; padding: 10px; margin: 5px; background: #fff176; border: 1px solid #fbc02d; cursor: grab; border-radius: 5px; font-weight: bold; }
-        #mensaje { margin-top: 20px; font-size: 1.2em; font-weight: bold; color: #2e7d32; }
-        .btn-volver { margin-top: 30px; display: inline-block; padding: 10px 20px; background: #8b4513; color: white; text-decoration: none; border-radius: 5px; }
+        body { font-family: 'Verdana', sans-serif; background-color: #e8f5e9; text-align: center; color: #1b5e20; padding: 20px; }
+        .grid-juegos { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; max-width: 900px; margin: 30px auto; }
+        .card-juego { background: white; border: 3px solid #4caf50; border-radius: 15px; padding: 20px; text-decoration: none; color: inherit; transition: 0.3s; display: flex; flex-direction: column; align-items: center; }
+        .card-juego:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); background-color: #f1f8e9; }
+        .icono { font-size: 40px; margin-bottom: 10px; }
+        .titulo-juego { font-weight: bold; font-size: 1.1em; }
+        .tipo-etiqueta { font-size: 0.8em; color: #666; margin-top: 5px; text-transform: uppercase; }
+        .btn-volver { display: inline-block; margin-top: 40px; padding: 15px 30px; background: #8b4513; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; }
     </style>
 </head>
 <body>
-    <h1>🔬 Clasifica los Animales</h1>
-    <p>Arrastra cada animal a su grupo correcto:</p>
 
-    <div id="opciones">
-        <div class="animal" draggable="true" id="perro">Perro 🐶</div>
-        <div class="animal" draggable="true" id="mariposa">Mariposa 🦋</div>
-        <div class="animal" draggable="true" id="pez">Pez 🐟</div>
-        <div class="animal" draggable="true" id="hormiga">Hormiga 🐜</div>
-    </div>
+    <h1>🔬 UF1: Investigando los Seres Vivos</h1>
+    <p>Completa los 5 retos para conseguir la Medalla de Biólogo.</p>
 
-    <div class="container">
-        <div class="box" id="vertebrados" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h3>VERTEBRADOS</h3>
-        </div>
-        <div class="box" id="invertebrados" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <h3>INVERTEBRADOS</h3>
-        </div>
-    </div>
-
-    <div id="mensaje"></div>
-    <a href="../index.html" class="btn-volver">⬅️ Volver al Mapa</a>
-
-    <script>
-        function allowDrop(ev) { ev.preventDefault(); }
-        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+    <div class="grid-juegos">
         
-        // Añadimos el evento drag a los animales
-        document.querySelectorAll('.animal').forEach(item => {
-            item.addEventListener('dragstart', drag);
-        });
+        <a href="juego-1/index.html" class="card-juego">
+            <div class="icono">🖱️</div>
+            <div class="titulo-juego">Clasificador</div>
+            <div class="tipo-etiqueta">Arrastrar y Soltar</div>
+        </a>
 
-        function drop(ev) {
-            ev.preventDefault();
-            var data = ev.dataTransfer.getData("text");
-            var el = document.getElementById(data);
-            
-            // Lógica de validación sencilla
-            if (ev.target.id === "vertebrados" && (data === "perro" || data === "pez")) {
-                ev.target.appendChild(el);
-                document.getElementById("mensaje").innerHTML = "¡Correcto! Es un vertebrado. ✅";
-            } else if (ev.target.id === "invertebrados" && (data === "mariposa" || data === "hormiga")) {
-                ev.target.appendChild(el);
-                document.getElementById("mensaje").innerHTML = "¡Muy bien! Es un invertebrado. ✅";
-            } else {
-                document.getElementById("mensaje").innerHTML = "¡Ups! Inténtalo otra vez. ❌";
-            }
-        }
-    </script>
+        <a href="juego-2/index.html" class="card-juego">
+            <div class="icono">👆</div>
+            <div class="titulo-juego">El Intruso</div>
+            <div class="tipo-etiqueta">Seleccionar</div>
+        </a>
+
+        <a href="juego-3/index.html" class="card-juego">
+            <div class="icono">⚖️</div>
+            <div class="titulo-juego">¿Verdad o Mentira?</div>
+            <div class="tipo-etiqueta">Verdadero/Falso</div>
+        </a>
+
+        <a href="juego-4/index.html" class="card-juego">
+            <div class="icono">❓</div>
+            <div class="titulo-juego">Súper Quiz</div>
+            <div class="tipo-etiqueta">Opción Múltiple</div>
+        </a>
+
+        <a href="juego-5/index.html" class="card-juego">
+            <div class="icono">🧠</div>
+            <div class="titulo-juego">Parejas Locas</div>
+            <div class="tipo-etiqueta">Especial (Memory)</div>
+        </a>
+
+    </div>
+
+    <a href="../index.html" class="btn-volver">⬅️ Volver al Mapa del Tesoro</a>
+
 </body>
 </html>
