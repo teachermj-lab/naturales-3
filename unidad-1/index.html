@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>UF1: El Reino Animal</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background: #e8f5e9; }
+        .container { display: flex; justify-content: space-around; margin-top: 20px; }
+        .box { width: 40%; min-height: 200px; border: 3px dashed #2e7d32; border-radius: 10px; background: white; padding: 10px; }
+        .animal { display: inline-block; padding: 10px; margin: 5px; background: #fff176; border: 1px solid #fbc02d; cursor: grab; border-radius: 5px; font-weight: bold; }
+        #mensaje { margin-top: 20px; font-size: 1.2em; font-weight: bold; color: #2e7d32; }
+        .btn-volver { margin-top: 30px; display: inline-block; padding: 10px 20px; background: #8b4513; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>🔬 Clasifica los Animales</h1>
+    <p>Arrastra cada animal a su grupo correcto:</p>
+
+    <div id="opciones">
+        <div class="animal" draggable="true" id="perro">Perro 🐶</div>
+        <div class="animal" draggable="true" id="mariposa">Mariposa 🦋</div>
+        <div class="animal" draggable="true" id="pez">Pez 🐟</div>
+        <div class="animal" draggable="true" id="hormiga">Hormiga 🐜</div>
+    </div>
+
+    <div class="container">
+        <div class="box" id="vertebrados" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h3>VERTEBRADOS</h3>
+        </div>
+        <div class="box" id="invertebrados" ondrop="drop(event)" ondragover="allowDrop(event)">
+            <h3>INVERTEBRADOS</h3>
+        </div>
+    </div>
+
+    <div id="mensaje"></div>
+    <a href="../index.html" class="btn-volver">⬅️ Volver al Mapa</a>
+
+    <script>
+        function allowDrop(ev) { ev.preventDefault(); }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+        
+        // Añadimos el evento drag a los animales
+        document.querySelectorAll('.animal').forEach(item => {
+            item.addEventListener('dragstart', drag);
+        });
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            var el = document.getElementById(data);
+            
+            // Lógica de validación sencilla
+            if (ev.target.id === "vertebrados" && (data === "perro" || data === "pez")) {
+                ev.target.appendChild(el);
+                document.getElementById("mensaje").innerHTML = "¡Correcto! Es un vertebrado. ✅";
+            } else if (ev.target.id === "invertebrados" && (data === "mariposa" || data === "hormiga")) {
+                ev.target.appendChild(el);
+                document.getElementById("mensaje").innerHTML = "¡Muy bien! Es un invertebrado. ✅";
+            } else {
+                document.getElementById("mensaje").innerHTML = "¡Ups! Inténtalo otra vez. ❌";
+            }
+        }
+    </script>
+</body>
+</html>
