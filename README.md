@@ -1,2 +1,2 @@
-# naturales-3
+# Ciencias de la Naturaleza - 3º
 JUEGOS EDUCATIVOS PARA CIENCIAS DE LA NATURALEZA (3 CURSO)
