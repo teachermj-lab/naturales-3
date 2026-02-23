@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Ciencias de la Naturaleza - 3º Primaria</title>
+    <style>
+        body {
+            font-family: 'Verdana', sans-serif;
+            background-color: #f0e68c; /* Color pergamino/mapa */
+            text-align: center;
+            color: #4b2c20;
+            padding: 20px;
+        }
+        h1 { margin-bottom: 30px; text-transform: uppercase; }
+        
+        .mapa-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .unidad-card {
+            background: #fff;
+            border: 4px solid #8b4513;
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* ESTADO ACTIVO */
+        .activo:hover {
+            transform: scale(1.05);
+            background-color: #fff9c4;
+            cursor: pointer;
+        }
+
+        /* ESTADO BLOQUEADO */
+        .bloqueado {
+            background-color: #d3d3d3;
+            border-color: #808080;
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .icono { font-size: 50px; margin-bottom: 10px; }
+        .numero { font-weight: bold; color: #8b4513; }
+    </style>
+</head>
+<body>
+
+    <h1>🗺️ Mi Mapa de Ciencias (3º Primaria)</h1>
+
+    <div class="mapa-container">
+        
+        <a href="unidad-1/index.html" class="unidad-card activo">
+            <div class="icono">🔬</div>
+            <div class="numero">UF1</div>
+            <div>INVESTIGANDO LOS SERES VIVOS</div>
+        </a>
+
+        <div class="unidad-card bloqueado">
+            <div class="icono">🔒</div>
+            <div class="numero">UF2</div>
+            <div>FORMAMOS PARTE DE UN ECOSISTEMA</div>
+        </div>
+
+        <div class="unidad-card bloqueado">
+            <div class="icono">🔒</div>
+            <div class="numero">UF3</div>
+            <div>EL LABORATORIO SECRETO</div>
+        </div>
+
+        <div class="unidad-card bloqueado">
+            <div class="icono">🔒</div>
+            <div class="numero">UF4</div>
+            <div>SOMOS INVENTORES</div>
+        </div>
+
+        <div class="unidad-card bloqueado">
+            <div class="icono">🔒</div>
+            <div class="numero">UF5</div>
+            <div>INTERNAUTAS ESPECIALES</div>
+        </div>
+
+        <div class="unidad-card bloqueado">
+            <div class="icono">🔒</div>
+            <div class="numero">UF6</div>
+            <div>3, 2, 1... PROGRAMANDO</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
