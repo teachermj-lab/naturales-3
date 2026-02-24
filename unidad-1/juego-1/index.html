@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Juego 1: El Clasificador de Vida</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body { font-family: 'Verdana', sans-serif; text-align: center; background: #e8f5e9; padding: 20px; }
+        .nivel-info { font-weight: bold; color: #2e7d32; margin-bottom: 10px; }
+        .area-juego { display: flex; justify-content: space-around; margin: 20px 0; }
+        .caja { width: 45%; min-height: 150px; border: 3px dashed #4caf50; border-radius: 15px; background: white; padding: 10px; }
+        .animal { display: inline-block; padding: 10px; margin: 5px; background: #fff176; border: 2px solid #fbc02d; cursor: grab; border-radius: 8px; font-size: 1.2em; }
+        #mensaje { margin: 20px; font-weight: bold; min-height: 1.5em; }
+        .oculto { display: none; }
+        .btn { padding: 15px 30px; background: #2e7d32; color: white; border: none; border-radius: 50px; cursor: pointer; font-size: 1em; }
+    </style>
+</head>
+<body>
+
+    <div id="pantalla-inicio">
+        <h1>🔬 ¡Misión Biólogo!</h1>
+        <p>Tu reto: Clasifica a los animales según tengan columna vertebral o no.</p>
+        <button class="btn" onclick="empezarJuego()">¡Empezar Nivel 1!</button>
+    </div>
+
+    <div id="pantalla-juego" class="oculto">
+        <div class="nivel-info">Nivel: <span id="num-nivel">1</span>/3</div>
+        <div id="animales-pendientes"></div>
+        
+        <div class="area-juego">
+            <div class="caja" id="vert" ondrop="drop(event)" ondragover="allowDrop(event)"><h3>VERTEBRADOS</h3></div>
+            <div class="caja" id="invert" ondrop="drop(event)" ondragover="allowDrop(event)"><h3>INVERTEBRADOS</h3></div>
+        </div>
+        <div id="mensaje"></div>
+    </div>
+
+    <div id="pantalla-final" class="oculto">
+        <h1>🏆 ¡NIVEL COMPLETADO!</h1>
+        <p>Has demostrado ser un experto en seres vivos.</p>
+        <p>🌟 ¡Has desbloqueado el Juego 2!</p>
+        <a href="../index.html" class="btn" style="text-decoration:none">Volver al Menú</a>
+    </div>
+
+    <script>
+        let nivelActual = 1;
+        const niveles = {
+            1: [ {id:'v1', n:'Perro 🐶', t:'vert'}, {id:'i1', n:'Mariposa 🦋', t:'invert'} ],
+            2: [ {id:'v2', n:'Pez 🐟', t:'vert'}, {id:'v3', n:'Ave 🐦', t:'vert'}, {id:'i2', n:'Caracol 🐌', t:'invert'} ],
+            3: [ {id:'v4', n:'Serpiente 🐍', t:'vert'}, {id:'i3', n:'Araña 🕷️', t:'invert'}, {id:'i4', n:'Medusa 🪼', t:'invert'} ]
+        };
+
+        function empezarJuego() {
+            document.getElementById('pantalla-inicio').classList.add('oculto');
+            document.getElementById('pantalla-juego').classList.remove('oculto');
+            cargarNivel();
+        }
+
+        function cargarNivel() {
+            const contenedor = document.getElementById('animales-pendientes');
+            contenedor.innerHTML = "";
+            document.getElementById('num-nivel').innerText = nivelActual;
+            niveles[nivelActual].forEach(a => {
+                let div = document.createElement('div');
+                div.className = 'animal'; div.id = a.id; div.innerText = a.n;
+                div.draggable = true; div.ondragstart = drag;
+                contenedor.appendChild(div);
+            });
+        }
+
+        function allowDrop(ev) { ev.preventDefault(); }
+        function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
+
+        function drop(ev) {
+            ev.preventDefault();
+            let id = ev.dataTransfer.getData("text");
+            let animal = niveles[nivelActual].find(a => a.id === id);
+            let zona = ev.target.closest('.caja').id;
+
+            if (animal.t === zona) {
+                document.getElementById(id).remove();
+                document.getElementById("mensaje").innerHTML = "¡Correcto! ✅";
+                document.getElementById("mensaje").style.color = "green";
+                comprobarVictoria();
+            } else {
+                let pista = animal.t === 'vert' ? "tiene huesos y columna." : "no tiene esqueleto interno.";
+                document.getElementById("mensaje").innerHTML = `¡Casi! Recuerda que este animal ${pista} ❌`;
+                document.getElementById("mensaje").style.color = "red";
+            }
+        }
+
+        function comprobarVictoria() {
+            if (document.getElementById('animales-pendientes').children.length === 0) {
+                if (nivelActual < 3) {
+                    nivelActual++;
+                    setTimeout(() => { 
+                        alert("¡Bien hecho! Pasamos al siguiente nivel."); 
+                        cargarNivel(); 
+                    }, 500);
+                } else {
+                    finalizarJuego();
+                }
+            }
+        }
+
+        function finalizarJuego() {
+            // AQUÍ SE GUARDA EL PROGRESO
+            localStorage.setItem('unidad1_juego1_completado', 'true');
+            document.getElementById('pantalla-juego').classList.add('oculto');
+            document.getElementById('pantalla-final').classList.remove('oculto');
+        }
+    </script>
+</body>
+</html>
